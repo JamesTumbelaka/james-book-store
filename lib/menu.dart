@@ -30,7 +30,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'James Book Store',
+          'Toko Buku',
         ),
       ),
       body: SingleChildScrollView(
@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 child: Text(
-                  'PBP Shop',
+                  'James Book Store',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,

@@ -63,3 +63,184 @@ Kelas   : PBP E
 
     - **SnackBar:**
       Menampilkan pesan ringkas di bagian bawah layar, biasanya digunakan untuk feedback singkat.
+
+3. Langkah Implementasi Checklist
+
+    - **Membuat proyek flutter baru**
+      * Membuat folder yang akan menjadi tempat proyek flutter.
+      * Menjalankan perintah `flutter create james_book_store` pada terminal yang sudah berada di dalam folder yang sudah dibuat sebelumnya.
+      * Masuk ke dalam direktori proyek dengan perintah `cd james_book_store`.
+    
+    - **Merapikan struktur proyek flutter**
+      * Membuat file baru dengan nama `menu.dart` pada direktori `james_book_store/lib` dan menambahkan kode berikut di baris pertama.
+      ```dart
+      import 'package:flutter/material.dart';
+      ```
+
+      * Memindahkan kode dari baris ke-39 hingga akhir pada `main.dart` ke file `menu.dart` yang sudah dibuat.
+      ```dart
+      class MyHomePage ... {
+        ...
+      }
+
+      class _MyHomePageState ... {
+        ...
+      }
+      ```
+
+      * Menambahkan import `menu.dart` pada file `main.dart` seperti berikut.
+      ```dart
+      import 'package:shopping_list/menu.dart';
+      ```
+    
+    - **Membuat widget pada flutter**
+      * Pada file `main.dart`, mengubah `MyHomePage(title: 'Flutter Demo Home Page')` menjadi `MyHomePage()` saja.
+
+      * Mengubah sifat widget halaman menjadi *stateless* dengan mengubah bagian `class MyHomePage` seperti berikut, dan menghapus fungsi `State` yang terdapat dibawah bagian *stateless widget* ini.
+
+      ```dart
+      class MyHomePage extends StatelessWidget {
+        MyHomePage({Key? key}) : super(key: key);
+
+        @override
+        Widget build(BuildContext context) {
+          return Scaffold(
+              ...
+          );
+        }
+      }
+      ```
+
+      * Mendefinisikan tipe data untuk teks dan card dalam `class ShopItem`.
+      ```dart
+      class ShopItem {
+        final String name;
+        final IconData icon;
+        final String snackBarText;
+        final Color color;
+
+        ShopItem(this.name, this.icon, this.snackBarText, this.color);
+      }
+      ```
+
+      * Menambahkan kode berikut dibawah kode `MyHomePage({Key? key}) : super(key: key);` untuk menambahkan barang - barang yang dijual.
+
+      ```dart
+      final List<ShopItem> items = [
+        ShopItem("Lihat Item", Icons.checklist, 'Kamu telah menekan tombol Lihat Item', Colors.green),
+        ShopItem("Tambah Item", Icons.add_shopping_cart, 'Kamu telah menekan tombol Tambah Item', Colors.blue),
+        ShopItem("Logout", Icons.logout, 'Kamu telah menekan tombol Logout', Colors.red),
+      ];
+      ```
+
+      * Menambahkan kode berikut dalam Widget build.
+
+      ```dart
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'James Book Store',
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                  child: Text(
+                    'PBP Shop',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                GridView.count(
+                  primary: true,
+                  padding: const EdgeInsets.all(20),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 3,
+                  shrinkWrap: true,
+                  children: items.map((ShopItem item) {
+                    return ShopCard(item);
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      ```
+      * Membuat *widget stateless* untuk menampilkan *card*.
+
+      ```dart
+      class ShopCard extends StatelessWidget {
+        final ShopItem item;
+
+        const ShopCard(this.item, {super.key});
+
+        @override
+        Widget build(BuildContext context) {
+          return Material(
+            color: item.color, // Menggunakan warna dari objek item
+            child: InkWell(
+              onTap: () {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(SnackBar(content: Text(item.snackBarText)));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        item.icon,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      const Padding(padding: EdgeInsets.all(3)),
+                      Text(
+                        item.name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+      }
+      ```
+
+      * Menjalankan proyek flutter dengan perintah `flutter run` dan halaman aplikasi sudah dapat terlihat sudah memenuhi checklist yang ditentukan.
+
+      * Untuk pengerjaan soal bonus, dapat dilihat pada bagian `List ShopItem` dimana pada masing - masing objek `ShopItem` terdapat atribut warna yang berbeda.
+      ```dart
+      final List<ShopItem> items = [
+        ShopItem("Lihat Item", Icons.checklist, 'Kamu telah menekan tombol Lihat Item', Colors.green),
+        ShopItem("Tambah Item", Icons.add_shopping_cart, 'Kamu telah menekan tombol Tambah Item', Colors.blue),
+        ShopItem("Logout", Icons.logout, 'Kamu telah menekan tombol Logout', Colors.red),
+      ];
+
+      ...
+
+      class ShopItem {
+        final String name;
+        final IconData icon;
+        final String snackBarText;
+        final Color color;
+
+        ShopItem(this.name, this.icon, this.snackBarText, this.color);
+      }
+      ```
+
+
+
