@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:james_book_store/models/book.dart';
+import 'package:james_book_store/screens/booklist_list.dart';
+import 'package:james_book_store/screens/booklist_form.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +27,7 @@ class MyHomePage extends StatelessWidget {
     ShopItem("Tambah Item", Icons.add_shopping_cart, 'Kamu telah menekan tombol Tambah Item', Colors.blue),
     ShopItem("Logout", Icons.logout, 'Kamu telah menekan tombol Logout', Colors.red),
   ];
+  final List<Item> books = [];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,7 @@ class MyHomePage extends StatelessWidget {
                 crossAxisCount: 3,
                 shrinkWrap: true,
                 children: items.map((ShopItem item) {
-                  return ShopCard(item);
+                  return ShopCard(item, books: books);
                 }).toList(),
               ),
             ],
@@ -79,8 +83,8 @@ class ShopItem {
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
-
-  const ShopCard(this.item, {super.key});
+  final List<Item> books;
+  const ShopCard(this.item, {required this.books, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +92,25 @@ class ShopCard extends StatelessWidget {
       color: item.color, // Menggunakan warna dari objek item
       child: InkWell(
         onTap: () {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(item.snackBarText)));
+          if (item.name == "Lihat Item") {
+            // Navigasi ke ProductListPage
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProductListPage(item: books),
+              ),
+            );
+          }
+          else if (item.name == "Tambah Item") {
+            // Navigate to the form to add a new item
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const ShopFormPage()),
+            );
+          } else {
+            // Show the snackbar for other items
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text(item.snackBarText)));
+          }
         },
         child: Container(
           padding: const EdgeInsets.all(8),
