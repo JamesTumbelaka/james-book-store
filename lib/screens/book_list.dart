@@ -20,8 +20,8 @@ class BookListViewPage extends StatelessWidget {
         itemCount: books.length,
         itemBuilder: (context, index) {
           return Card(
-            elevation: 4.0, // Adds a slight shadow to each card
-            margin: EdgeInsets.all(8.0), // Adds margin around each card
+            elevation: 4.0,
+            margin: EdgeInsets.all(8.0),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Column(
@@ -34,7 +34,7 @@ class BookListViewPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0), // Provides a small space between the text widgets
+                  SizedBox(height: 8.0),
                   Text(
                     "Price: ${books[index].price}",
                     style: TextStyle(fontSize: 16.0),
