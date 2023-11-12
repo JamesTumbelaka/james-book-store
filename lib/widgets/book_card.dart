@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/screens/booklist_form.dart';
+import 'package:james_book_store/screens/book_list.dart';
+import 'package:james_book_store/models/book.dart';
 
 class ShopItem {
   final String name;
   final IconData icon;
+  final String snackBarText;
+  final Color color;
 
-  ShopItem(this.name, this.icon);
+  ShopItem(this.name, this.icon, this.snackBarText, this.color);
 }
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
 
-  const ShopCard(this.item, {super.key}); // Constructor
+  const ShopCard(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.indigo,
+      color: item.color,
       child: InkWell(
-        // Area responsive terhadap sentuhan
         onTap: () {
-          // Memunculkan SnackBar ketika diklik
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!")));
+            ..showSnackBar(SnackBar(content: Text(item.snackBarText)));
           if (item.name == "Tambah Item") {
             Navigator.push(context,
               MaterialPageRoute(builder: (context) => const ShopFormPage()));
           }
+          else if (item.name == "Lihat Item") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BookListViewPage(books: globalBookList)),
+            );
+          }
         },
         child: Container(
-          // Container untuk menyimpan Icon dan Text
           padding: const EdgeInsets.all(8),
           child: Center(
             child: Column(

@@ -1,7 +1,9 @@
-class Item {
+List<Book> globalBookList = [];
+
+class Book {
   final String name;
   final int price;
   final String description;
 
-  Item({required this.name, required this.price, required this.description});
+  Book({required this.name, required this.price, required this.description});
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/widgets/left_drawer.dart';
+import 'package:james_book_store/models/book.dart';
 
 class ShopFormPage extends StatefulWidget {
     const ShopFormPage({super.key});
@@ -10,16 +11,15 @@ class ShopFormPage extends StatefulWidget {
 
 class _ShopFormPageState extends State<ShopFormPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = "";
-  int _price = 0;
-  String _description = "";
+  Book _book = Book(name: '', price: 0, description: '');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text(
-            'Form Tambah Produk',
+            'Form Tambah Item',
           ),
         ),
         backgroundColor: Colors.indigo,
@@ -36,15 +36,19 @@ class _ShopFormPageState extends State<ShopFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Nama Produk",
-                    labelText: "Nama Produk",
+                    hintText: "Nama Item",
+                    labelText: "Nama Item",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _name = value!;
+                      _book = Book(
+                        name: value!,
+                        price: _book.price,
+                        description: _book.description,
+                      );
                     });
                   },
                   validator: (String? value) {
@@ -67,7 +71,11 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _price = int.parse(value!);
+                      _book = Book(
+                        name: _book.name,
+                        price: int.tryParse(value!) ?? 0,
+                        description: _book.description,
+                      );
                     });
                   },
                   validator: (String? value) {
@@ -93,7 +101,11 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _description = value!;
+                      _book = Book(
+                        name: _book.name,
+                        price: _book.price,
+                        description: value!,
+                      );
                     });
                   },
                   validator: (String? value) {
@@ -108,47 +120,68 @@ class _ShopFormPageState extends State<ShopFormPage> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                        MaterialStateProperty.all(Colors.indigo),
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Produk berhasil tersimpan'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Nama: $_name'),
-                                    Text('Harga: $_price'),
-                                    Text('Deskripsi: $_description'),
+                  child : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.grey),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                            MaterialStateProperty.all(Colors.indigo),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            globalBookList.add(_book);
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: const Text('Item berhasil tersimpan'),
+                                  content: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Nama: ${_book.name}'),
+                                        Text('Harga: ${_book.price}'),
+                                        Text('Deskripsi: ${_book.description}'),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
                                   ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                      _formKey.currentState!.reset();
-                    },
-                    child: const Text(
-                      "Save",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                          }
+                          _formKey.currentState!.reset();
+                          setState(() {
+                            _book = Book(name: '', price: 0, description: '');
+                          });
+                        },
+                        child: const Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ]
                   ),
                 ),
               ),

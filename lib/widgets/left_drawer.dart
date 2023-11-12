@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/screens/menu.dart';
 import 'package:james_book_store/screens/booklist_form.dart';
+import 'package:james_book_store/screens/book_list.dart';
+import 'package:james_book_store/models/book.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -17,7 +19,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'James Book Store',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -26,7 +28,7 @@ class LeftDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(padding: EdgeInsets.all(10)),
-                Text("Catat seluruh keperluan belanjamu di sini!",
+                Text("Kelola seluruh list bukumu disini!",
                     textAlign: TextAlign.center, // center alignment
                     style: TextStyle(
                       fontSize: 15.0, // font size 15
@@ -37,28 +39,35 @@ class LeftDrawer extends StatelessWidget {
               ],
             ),
           ),
-          // TODO: Bagian routing
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Halaman Utama'),
-            // Bagian redirection ke MyHomePage
             onTap: () {
+              Navigator.popUntil(context, (route) => route.isFirst);
               Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage(),
-                  ));
+                context,
+                MaterialPageRoute(builder: (context) => MyHomePage()),
+              );
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
-            title: const Text('Tambah Produk'),
-            // Bagian redirection ke ShopFormPage
+            title: const Text('Tambah Item'),
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ShopFormPage()),
+                MaterialPageRoute(builder: (context) => const ShopFormPage()),
               );
             },
+          ),
+          ListTile(
+            leading: const Icon(Icons.checklist),
+            title: const Text('Lihat Item'),
+            onTap: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BookListViewPage(books: globalBookList)),
+            );
+            }
           ),
 
         ],
