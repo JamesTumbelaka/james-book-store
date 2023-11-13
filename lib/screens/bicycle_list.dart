@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/models/bicycle.dart';
 
-class BookListViewPage extends StatelessWidget {
+class BicycleListViewPage extends StatelessWidget {
   final List<Bicycle> bicycle;
 
-  const BookListViewPage({Key? key, required this.bicycle}) : super(key: key);
+  const BicycleListViewPage({Key? key, required this.bicycle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +36,22 @@ class BookListViewPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    "Price: ${bicycle[index].price}",
+                    "Harga: ${bicycle[index].price}",
                     style: const TextStyle(fontSize: 16.0),
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    "Price: ${bicycle[index].amount}",
+                    "Jumlah: ${bicycle[index].amount}",
                     style: const TextStyle(fontSize: 16.0),
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    "Date Added: ${bicycle[index].dateAdded}",
+                    "Waktu Ditambahkan: ${bicycle[index].dateAdded}",
                     style: const TextStyle(fontSize: 16.0),
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    "Description: ${bicycle[index].description}",
+                    "Deskripsi: ${bicycle[index].description}",
                     style: const TextStyle(fontSize: 16.0),
                   ),
                 ],

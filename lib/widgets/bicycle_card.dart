@@ -33,7 +33,7 @@ class ShopCard extends StatelessWidget {
           else if (item.name == "Lihat Item") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BookListViewPage(bicycle: globalBicycleList)),
+              MaterialPageRoute(builder: (context) => BicycleListViewPage(bicycle: globalBicycleList)),
             );
           }
         },

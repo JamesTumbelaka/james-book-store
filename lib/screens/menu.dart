@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/widgets/bicycle_card.dart';
+import 'package:james_book_store/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class MyHomePage extends StatelessWidget {
             backgroundColor: Colors.indigo,
             foregroundColor: Colors.white,
           ),
-          
+          drawer: const LeftDrawer(),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
