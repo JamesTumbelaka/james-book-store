@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:james_book_store/screens/booklist_form.dart';
-import 'package:james_book_store/screens/book_list.dart';
-import 'package:james_book_store/models/book.dart';
+import 'package:james_book_store/screens/bicycle_form.dart';
+import 'package:james_book_store/screens/bicycle_list.dart';
+import 'package:james_book_store/models/bicycle.dart';
 
 class ShopItem {
   final String name;
@@ -33,7 +33,7 @@ class ShopCard extends StatelessWidget {
           else if (item.name == "Lihat Item") {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BookListViewPage(books: globalBookList)),
+              MaterialPageRoute(builder: (context) => BookListViewPage(bicycle: globalBicycleList)),
             );
           }
         },

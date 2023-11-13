@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:james_book_store/widgets/left_drawer.dart';
-import 'package:james_book_store/models/book.dart';
+import 'package:james_book_store/models/bicycle.dart';
 
 class ShopFormPage extends StatefulWidget {
     const ShopFormPage({super.key});
@@ -11,7 +11,7 @@ class ShopFormPage extends StatefulWidget {
 
 class _ShopFormPageState extends State<ShopFormPage> {
   final _formKey = GlobalKey<FormState>();
-  Book _book = Book(name: '', price: 0, description: '');
+  Bicycle _bicycle = Bicycle(name: '', price: 0, amount: 0, dateAdded: DateTime.now(), description: '');
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,12 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _book = Book(
+                      _bicycle = Bicycle(
                         name: value!,
-                        price: _book.price,
-                        description: _book.description,
+                        price: _bicycle.price,
+                        amount: _bicycle.amount,
+                        dateAdded: DateTime.now(),
+                        description: _bicycle.description,
                       );
                     });
                   },
@@ -71,10 +73,44 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _book = Book(
-                        name: _book.name,
+                      _bicycle = Bicycle(
+                        name: _bicycle.name,
                         price: int.tryParse(value!) ?? 0,
-                        description: _book.description,
+                        amount: _bicycle.amount,
+                        dateAdded: DateTime.now(),
+                        description: _bicycle.description,
+                      );
+                    });
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Harga tidak boleh kosong!";
+                    }
+                    if (int.tryParse(value) == null) {
+                      return "Harga harus berupa angka!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: "Jumlah",
+                    labelText: "Jumlah",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+                  onChanged: (String? value) {
+                    setState(() {
+                      _bicycle = Bicycle(
+                        name: _bicycle.name,
+                        price: _bicycle.price,
+                        amount: int.tryParse(value!) ?? 0,
+                        dateAdded: DateTime.now(),
+                        description: _bicycle.description,
                       );
                     });
                   },
@@ -101,9 +137,11 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _book = Book(
-                        name: _book.name,
-                        price: _book.price,
+                      _bicycle = Bicycle(
+                        name: _bicycle.name,
+                        price: _bicycle.price,
+                        amount: _bicycle.amount,
+                        dateAdded: DateTime.now(),
                         description: value!,
                       );
                     });
@@ -142,7 +180,12 @@ class _ShopFormPageState extends State<ShopFormPage> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            globalBookList.add(_book);
+                            String tempName = _bicycle.name;
+                            int tempPrice = _bicycle.price;
+                            int tempAmount = _bicycle.amount;
+                            DateTime tempDateAdded = _bicycle.dateAdded;
+                            String tempDescription = _bicycle.description;
+                            globalBicycleList.add(_bicycle);
                             showDialog(
                               context: context,
                               builder: (context) {
@@ -153,9 +196,11 @@ class _ShopFormPageState extends State<ShopFormPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text('Nama: ${_book.name}'),
-                                        Text('Harga: ${_book.price}'),
-                                        Text('Deskripsi: ${_book.description}'),
+                                        Text('Nama: $tempName'),
+                                        Text('Harga: $tempPrice'),
+                                        Text('Jumlah: $tempAmount'),
+                                        Text('Waktu Ditambahkan: $tempDateAdded'),
+                                        Text('Deskripsi: $tempDescription'),
                                       ],
                                     ),
                                   ),
@@ -173,7 +218,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                           }
                           _formKey.currentState!.reset();
                           setState(() {
-                            _book = Book(name: '', price: 0, description: '');
+                            _bicycle = Bicycle(name: '', price: 0, amount: 0, dateAdded: DateTime.now(), description: '');
                           });
                         },
                         child: const Text(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:james_book_store/widgets/book_card.dart';
+import 'package:james_book_store/widgets/bicycle_card.dart';
 
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
