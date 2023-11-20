@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:james_book_store/screens/menu.dart';
 import 'package:james_book_store/screens/bicycle_form.dart';
 import 'package:james_book_store/screens/bicycle_list.dart';
-import 'package:james_book_store/models/bicycle.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -19,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'James Book Store',
+                  'James Bicycle Store',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -28,12 +27,12 @@ class LeftDrawer extends StatelessWidget {
                   ),
                 ),
                 Padding(padding: EdgeInsets.all(10)),
-                Text("Kelola seluruh list bukumu disini!",
-                    textAlign: TextAlign.center, // center alignment
+                Text("Kelola seluruh list sepedamu disini!",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 15.0, // font size 15
-                      color: Colors.white, // text color white
-                      fontWeight: FontWeight.normal, // font weight biasa
+                      fontSize: 15.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
                     ),
                 ),
               ],
@@ -64,12 +63,11 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Lihat Item'),
             onTap: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BicycleListViewPage(bicycle: globalBicycleList)),
-            );
+                context,
+                MaterialPageRoute(builder: (context) => const BicycleListViewPage()),
+              );
             }
           ),
-
         ],
       ),
     );

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:james_book_store/screens/menu.dart';
 import 'package:james_book_store/widgets/left_drawer.dart';
-import 'package:james_book_store/models/bicycle.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
 
 class ShopFormPage extends StatefulWidget {
     const ShopFormPage({super.key});
@@ -11,15 +14,18 @@ class ShopFormPage extends StatefulWidget {
 
 class _ShopFormPageState extends State<ShopFormPage> {
   final _formKey = GlobalKey<FormState>();
-  Bicycle _bicycle = Bicycle(name: '', price: 0, amount: 0, dateAdded: DateTime.now(), description: '');
-
+  String _name = "";
+  int _price = 0;
+  int _amount = 0;
+  String _description = "";
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
           child: Text(
-            'Form Tambah Item',
+            'Form Tambah Produk',
           ),
         ),
         backgroundColor: Colors.indigo,
@@ -36,21 +42,15 @@ class _ShopFormPageState extends State<ShopFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Nama Item",
-                    labelText: "Nama Item",
+                    hintText: "Nama Produk",
+                    labelText: "Nama Produk",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _bicycle = Bicycle(
-                        name: value!,
-                        price: _bicycle.price,
-                        amount: _bicycle.amount,
-                        dateAdded: DateTime.now(),
-                        description: _bicycle.description,
-                      );
+                      _name = value!;
                     });
                   },
                   validator: (String? value) {
@@ -73,13 +73,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _bicycle = Bicycle(
-                        name: _bicycle.name,
-                        price: int.tryParse(value!) ?? 0,
-                        amount: _bicycle.amount,
-                        dateAdded: DateTime.now(),
-                        description: _bicycle.description,
-                      );
+                      _price = int.parse(value!);
                     });
                   },
                   validator: (String? value) {
@@ -105,13 +99,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _bicycle = Bicycle(
-                        name: _bicycle.name,
-                        price: _bicycle.price,
-                        amount: int.tryParse(value!) ?? 0,
-                        dateAdded: DateTime.now(),
-                        description: _bicycle.description,
-                      );
+                      _amount = int.parse(value!);
                     });
                   },
                   validator: (String? value) {
@@ -137,13 +125,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _bicycle = Bicycle(
-                        name: _bicycle.name,
-                        price: _bicycle.price,
-                        amount: _bicycle.amount,
-                        dateAdded: DateTime.now(),
-                        description: value!,
-                      );
+                      _description = value!;
                     });
                   },
                   validator: (String? value) {
@@ -158,75 +140,43 @@ class _ShopFormPageState extends State<ShopFormPage> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.grey),
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text(
-                          "Cancel",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                            MaterialStateProperty.all(Colors.indigo),
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            String tempName = _bicycle.name;
-                            int tempPrice = _bicycle.price;
-                            int tempAmount = _bicycle.amount;
-                            DateTime tempDateAdded = _bicycle.dateAdded;
-                            String tempDescription = _bicycle.description;
-                            globalBicycleList.add(_bicycle);
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('Item berhasil tersimpan'),
-                                  content: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Nama: $tempName'),
-                                        Text('Harga: $tempPrice'),
-                                        Text('Jumlah: $tempAmount'),
-                                        Text('Waktu Ditambahkan: $tempDateAdded'),
-                                        Text('Deskripsi: $tempDescription'),
-                                      ],
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                        MaterialStateProperty.all(Colors.indigo),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                          final response = await request.postJson(
+                          "http://localhost:8000/create-flutter/",
+                          jsonEncode(<String, String>{
+                              'name': _name,
+                              'price': _price.toString(),
+                              'amount': _amount.toString(),
+                              'description': _description,
+                          }));
+                          if (response['status'] == 'success') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                              content: Text("Produk baru berhasil disimpan!"),
+                              ));
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyHomePage()),
+                              );
+                          } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                  content:
+                                      Text("Terdapat kesalahan, silakan coba lagi."),
+                              ));
                           }
-                          _formKey.currentState!.reset();
-                          setState(() {
-                            _bicycle = Bicycle(name: '', price: 0, amount: 0, dateAdded: DateTime.now(), description: '');
-                          });
-                        },
-                        child: const Text(
-                          "Save",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ]
+                      }
+                  },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),

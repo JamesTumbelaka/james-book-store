@@ -882,3 +882,36 @@ Kelas   : PBP E
       ),
       ```
 </details>
+
+<details>
+<summary>Tugas 9</summary>
+
+# Tugas 9
+## Jawaban Pertanyaan
+
+1. **Pengambilan Data JSON Tanpa Model di Flutter**:
+   - **Apakah Mungkin?**: Ya, memungkinkan untuk mengambil data JSON tanpa membuat model terlebih dahulu di Flutter. Kita dapat menggunakan `Map` untuk secara langsung memproses data JSON yang diterima.
+   - **Perbandingan dengan Membuat Model**: Membuat model biasanya lebih baik dibandingkan langsung mengolah data JSON sebagai `Map` karena:
+     - **Kejelasan dan Keselamatan Tipe**: Model memberikan struktur yang jelas dan pengecekan tipe data, sehingga mengurangi kemungkinan terjadi kesalahan.
+     - **Mudah Dikelola**: Model membuat kode lebih mudah dikelola, terutama untuk proyek yang besar atau saat berkolaborasi dengan tim.
+     - **Mudah untuk Modifikasi dan Skalabilitas**: Dengan model, jika struktur data berubah, kita hanya perlu memodifikasi model, bukan setiap instance di mana data tersebut digunakan.
+
+2. **Fungsi dari `CookieRequest` dan Kebutuhan Berbagi Instance**:
+   - **Fungsi**: `CookieRequest` biasanya digunakan untuk mengelola cookies dalam aplikasi Flutter, terutama dalam konteks autentikasi dengan membantu menyimpan, mengambil, dan mengelola cookie sesi dari server.
+   - **Kebutuhan Sharing**: Sharing instance `CookieRequest` ke seluruh komponen aplikasi Flutter penting untuk:
+     - **Konsistensi Sesi**: Memastikan bahwa setiap request ke server menggunakan informasi sesi yang sama, yang penting untuk fitur yang memerlukan autentikasi.
+     - **Manajemen Sumber Daya**: Mencegah pembuatan multiple instances yang melakukan hal yang sama, sehingga lebih efisien.
+
+3. **Mekanisme Pengambilan Data dari JSON di Flutter**:
+   - **Pengambilan Data**: Menggunakan HTTP request (misalnya dengan package `http`) untuk mengambil data dari sebuah API.
+   - **Parsing JSON**: Setelah menerima respons, data JSON di-parse menjadi struktur Dart yang dapat digunakan, biasanya menjadi Map atau langsung menjadi objek berdasarkan model yang telah didefinisikan.
+   - **Menampilkan Data**: Data yang telah di-parse kemudian dapat digunakan untuk membangun widget di Flutter, misalnya dengan menggunakan `ListView` untuk menampilkan daftar item.
+
+4. **Mekanisme Autentikasi dari Flutter ke Django**:
+   - **Input Data Akun**: Pengguna memasukkan data akun (biasanya username dan password) di Flutter.
+   - **Pengiriman Data**: Flutter mengirimkan data tersebut ke backend Django, biasanya melalui HTTP POST request.
+   - **Proses Autentikasi oleh Django**: Django menerima data, memproses autentikasi (memeriksa database user, dll), dan menghasilkan respons. Jika berhasil, Django mengatur cookie sesi atau token autentikasi.
+   - **Respons ke Flutter**: Django mengirim respons kembali ke Flutter, yang mungkin termasuk token atau konfirmasi sesi.
+   - **Navigasi Menu di Flutter**: Setelah autentikasi berhasil, aplikasi Flutter biasanya akan melakukan navigasi ke halaman menu atau dashboard utama. Informasi sesi atau token disimpan untuk digunakan dalam request berikutnya.
+
+</details>
