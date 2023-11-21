@@ -15,26 +15,35 @@ class BicycleDetailPage extends StatelessWidget {
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Name: ${product.fields.name}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: Center(
+        child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              elevation: 4.0,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Name: ${product.fields.name}',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    Text('Price: Rp${product.fields.price.toString()}'),
+                    const SizedBox(height: 10),
+                    Text('Amount: ${product.fields.amount}'),
+                    const SizedBox(height: 10),
+                    Text('Date Added: ${product.fields.dateAdded}'),
+                    const SizedBox(height: 10),
+                    Text('Description: ${product.fields.description}'),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            Text('Price: Rp${product.fields.price.toString()}'),
-            const SizedBox(height: 10),
-            Text('Amount: ${product.fields.amount}'),
-            const SizedBox(height: 10),
-            Text('Date Added: ${product.fields.dateAdded}'),
-            const SizedBox(height: 10),
-            Text('Description: ${product.fields.description}'),
-          ],
         ),
-      ),
+      )
     );
   }
 }

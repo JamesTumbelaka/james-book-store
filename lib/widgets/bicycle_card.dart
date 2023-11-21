@@ -16,8 +16,9 @@ class ShopItem {
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
+  final int id;
 
-  const ShopCard(this.item, {super.key});
+  const ShopCard(this.item, this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +32,15 @@ class ShopCard extends StatelessWidget {
             ..showSnackBar(SnackBar(content: Text(item.snackBarText)));
           if (item.name == "Tambah Item") {
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ShopFormPage()));
+              MaterialPageRoute(builder: (context) => ShopFormPage(id: id)));
           }
           else if (item.name == "Lihat Item") {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const BicycleListViewPage()));
+                MaterialPageRoute(builder: (context) => BicycleListViewPage(id: id)));
           }
           else if (item.name == "Logout") {
             final response = await request.logout(
-                "http://localhost:8000/auth/logout/");
+                "http://james-zefanya-tugas.pbp.cs.ui.ac.id/auth/logout/");
             String message = response["message"];
             if (response['status']) {
               String uname = response["username"];

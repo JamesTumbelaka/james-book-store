@@ -3,7 +3,8 @@ import 'package:james_book_store/widgets/bicycle_card.dart';
 import 'package:james_book_store/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
-    MyHomePage({Key? key}) : super(key: key);
+    final int id;
+    MyHomePage({Key? key, required this.id}) : super(key: key);
     final List<ShopItem> items = [
     ShopItem("Lihat Item", Icons.checklist, 'Kamu telah menekan tombol Lihat Item', Colors.green),
     ShopItem("Tambah Item", Icons.add_shopping_cart, 'Kamu telah menekan tombol Tambah Item', Colors.blue),
@@ -20,7 +21,7 @@ class MyHomePage extends StatelessWidget {
             backgroundColor: Colors.indigo,
             foregroundColor: Colors.white,
           ),
-          drawer: const LeftDrawer(),
+          drawer: LeftDrawer(id: id),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -45,7 +46,7 @@ class MyHomePage extends StatelessWidget {
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     children: items.map((ShopItem item) {
-                      return ShopCard(item);
+                      return ShopCard(item, id);
                     }).toList(),
                   ),
                 ],

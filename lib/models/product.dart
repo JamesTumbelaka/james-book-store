@@ -5,7 +5,7 @@ List<Product> productFromJson(String str) => List<Product>.from(json.decode(str)
 String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
-    Model model;
+    String model;
     int pk;
     Fields fields;
 
@@ -16,13 +16,13 @@ class Product {
     });
 
     factory Product.fromJson(Map<String, dynamic> json) => Product(
-        model: modelValues.map[json["model"]]!,
+        model: json["model"],
         pk: json["pk"],
         fields: Fields.fromJson(json["fields"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "model": modelValues.reverse[model],
+        "model": model,
         "pk": pk,
         "fields": fields.toJson(),
     };
@@ -62,24 +62,4 @@ class Fields {
         "date_added": "${dateAdded.year.toString().padLeft(4, '0')}-${dateAdded.month.toString().padLeft(2, '0')}-${dateAdded.day.toString().padLeft(2, '0')}",
         "description": description,
     };
-}
-
-enum Model {
-    MAIN_PRODUCT
-}
-
-final modelValues = EnumValues({
-    "main.product": Model.MAIN_PRODUCT
-});
-
-class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
 }

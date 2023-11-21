@@ -6,7 +6,8 @@ import 'package:james_book_store/widgets/left_drawer.dart';
 import 'package:james_book_store/screens/bicycle_detail.dart';
 
 class BicycleListViewPage extends StatefulWidget {
-    const BicycleListViewPage({Key? key}) : super(key: key);
+    final int id;
+    const BicycleListViewPage({Key? key, required this.id}) : super(key: key);
 
     @override
     _ProductPageState createState() => _ProductPageState();
@@ -14,7 +15,8 @@ class BicycleListViewPage extends StatefulWidget {
 
 class _ProductPageState extends State<BicycleListViewPage> {
   Future<List<Product>> fetchProduct() async {
-      var url = Uri.parse('http://localhost:8000/json/');
+    final int id = widget.id;
+      var url = Uri.parse('http://james-zefanya-tugas.pbp.cs.ui.ac.id/json/');
       
       var response = await http.get(
           url,
@@ -26,7 +28,7 @@ class _ProductPageState extends State<BicycleListViewPage> {
 
       List<Product> list_product = [];
       for (var d in data) {
-          if (d != null) {
+          if (d != null && d['fields']['user'] == id) {
               list_product.add(Product.fromJson(d));
           }
       }
@@ -35,6 +37,7 @@ class _ProductPageState extends State<BicycleListViewPage> {
 
   @override
   Widget build(BuildContext context) {
+      final int id = widget.id;
 
       double screenWidth = MediaQuery.of(context).size.width;
 
@@ -53,7 +56,7 @@ class _ProductPageState extends State<BicycleListViewPage> {
               backgroundColor: Colors.indigo,
               foregroundColor: Colors.white,
           ),
-          drawer: const LeftDrawer(),
+          drawer: LeftDrawer(id: id),
           body: FutureBuilder(
               future: fetchProduct(),
               builder: (context, AsyncSnapshot snapshot) {

@@ -4,7 +4,8 @@ import 'package:james_book_store/screens/bicycle_form.dart';
 import 'package:james_book_store/screens/bicycle_list.dart';
 
 class LeftDrawer extends StatelessWidget {
-  const LeftDrawer({super.key});
+  final int id;
+  const LeftDrawer({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class LeftDrawer extends StatelessWidget {
               Navigator.popUntil(context, (route) => route.isFirst);
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MyHomePage()),
+                MaterialPageRoute(builder: (context) => MyHomePage(id: id)),
               );
             },
           ),
@@ -54,7 +55,7 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Tambah Item'),
             onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ShopFormPage()),
+                MaterialPageRoute(builder: (context) => ShopFormPage(id: id)),
               );
             },
           ),
@@ -64,7 +65,7 @@ class LeftDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BicycleListViewPage()),
+                MaterialPageRoute(builder: (context) => BicycleListViewPage(id: id)),
               );
             }
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:james_book_store/screens/menu.dart';
+import 'package:james_book_store/screens/login.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
                     colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
                     useMaterial3: true,
                 ),
-                home: MyHomePage()),
+                home: const LoginPage()),
         );
     }
 }
