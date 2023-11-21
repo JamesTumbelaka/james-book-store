@@ -150,7 +150,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                           final response = await request.postJson(
-                          "http://james-zefanya-tugas.pbp.cs.ui.ac.id/create-flutter/",
+                          "https://james-zefanya-tugas.pbp.cs.ui.ac.id/create-flutter/",
                           jsonEncode(<String, String>{
                               'name': _name,
                               'price': _price.toString(),

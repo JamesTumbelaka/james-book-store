@@ -113,7 +113,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       }
 
                       final response = await http.post(
-                        Uri.parse('http://james-zefanya-tugas.pbp.cs.ui.ac.id/auth/register/'),
+                        Uri.parse('https://james-zefanya-tugas.pbp.cs.ui.ac.id/auth/register/'),
                         body: {
                           'username': username,
                           'password': password,

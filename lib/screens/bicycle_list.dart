@@ -16,7 +16,7 @@ class BicycleListViewPage extends StatefulWidget {
 class _ProductPageState extends State<BicycleListViewPage> {
   Future<List<Product>> fetchProduct() async {
     final int id = widget.id;
-      var url = Uri.parse('http://james-zefanya-tugas.pbp.cs.ui.ac.id/json/');
+      var url = Uri.parse('https://james-zefanya-tugas.pbp.cs.ui.ac.id/json/');
       
       var response = await http.get(
           url,

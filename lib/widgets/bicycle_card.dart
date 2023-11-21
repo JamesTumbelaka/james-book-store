@@ -40,7 +40,7 @@ class ShopCard extends StatelessWidget {
           }
           else if (item.name == "Logout") {
             final response = await request.logout(
-                "http://james-zefanya-tugas.pbp.cs.ui.ac.id/auth/logout/");
+                "https://james-zefanya-tugas.pbp.cs.ui.ac.id/auth/logout/");
             String message = response["message"];
             if (response['status']) {
               String uname = response["username"];
