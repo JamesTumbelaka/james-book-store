@@ -114,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            // Navigate to registration page
                             Navigator.push(
                               context,
                               MaterialPageRoute(
